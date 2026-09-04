@@ -1,0 +1,35 @@
+= OAuth2 Resource Server
+
+== Running the resource server
+
+The repository is a multi-module Maven project. The root `pom.xml` is an aggregator for the sample modules; running `mvn spring-boot:run` from the repository root does not start the UI and resource server as one application. Each Spring Boot module is an independent application with its own embedded server.
+
+To run this resource server on port 9000, change into this module and run:
+
+[source,shell]
+----
+cd oauth2/resource
+mvn spring-boot:run -Dspring-boot.run.arguments=--server.port=9000
+----
+
+Alternatively, from the repository root, run the module explicitly:
+
+[source,shell]
+----
+mvn -f oauth2/resource/pom.xml spring-boot:run -Dspring-boot.run.arguments=--server.port=9000
+----
+
+The UI and resource server must be started separately. For example, the UI can run on port 8080 while this resource server runs on port 9000. Starting the root Maven build does not combine the two Spring Boot applications into a single runtime process.
+
+== Building from the repository root
+
+To build all modules without starting their embedded servers, run:
+
+[source,shell]
+----
+mvn package
+----
+
+This builds the modules but does not mean that their Spring Boot applications will run concurrently.
+
+Fixes #187
